@@ -1,5 +1,6 @@
 package com.example.CRUDRESTapi.controller;
 
+import com.example.CRUDRESTapi.repository.domain.Role;
 import com.example.CRUDRESTapi.repository.domain.User;
 import com.example.CRUDRESTapi.service.UserService;
 import lombok.Data;
@@ -8,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
-
 
 @RestController
 @RequiredArgsConstructor
@@ -30,7 +32,14 @@ public class UserController {
 
     @PostMapping("api/users")
     public ResponseEntity<User> createUser(@RequestBody  User user){ //always make sure to include the @RequestBody
-        return ResponseEntity.ok().body(this.userService.saveUser(user));
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toString());
+        return ResponseEntity.created(uri).body(this.userService.saveUser(user));
+    }
+
+    @PostMapping("api/user/role")
+    public ResponseEntity<Role> createRole(@RequestBody  Role role){ //always make sure to include the @RequestBody
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/role/save").toString());
+        return ResponseEntity.created(uri).body(this.userService.saveRole(role));
     }
 
     @PostMapping("api/users/addRoleToUser")
@@ -38,9 +47,4 @@ public class UserController {
         this.userService.addRoleToUser(form.getUsername(), form.getRoleName());
         return ResponseEntity.ok().build();
     }
-}
-@Data
-class RoleToUserForm{ //this class is acting like an entity
-    private String username;
-    private String roleName;
 }

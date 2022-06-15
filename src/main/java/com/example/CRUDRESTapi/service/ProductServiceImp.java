@@ -46,7 +46,7 @@ public class ProductServiceImp implements ProductService{
     @Override
     public ProductDto getProductById(long productId) {
         return null;
-    }
+    } //complete this method
     @Override
     public void deleteProduct(long productId) {
         Optional<JpaProduct> productDB = this.productRepository.findById(productId);

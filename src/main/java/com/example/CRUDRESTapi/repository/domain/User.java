@@ -1,16 +1,16 @@
 package com.example.CRUDRESTapi.repository.domain;
 import lombok.*;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
-@Data
+@Data           //Warning:(7, 1) Using @Data for JPA entities is not recommended. It can cause severe performance and memory consumption issues.
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users") //if we did not use table name as users, the name (user) is reserved
-                        // , so we will run into problems
+@Table(name = "users") //if we did not use table name or not name it as users, the name (user) is reserved
+                        // so the program will not run because user is reserved in H2
 public class User {
+
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
