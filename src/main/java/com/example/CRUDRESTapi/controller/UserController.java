@@ -30,13 +30,13 @@ public class UserController {
         return ResponseEntity.ok().body(this.userService.getUserById(id));
     }
 
-    @PostMapping("api/users")
+    @PostMapping("api/users/create")
     public ResponseEntity<User> createUser(@RequestBody  User user){ //always make sure to include the @RequestBody
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toString());
         return ResponseEntity.created(uri).body(this.userService.saveUser(user));
     }
 
-    @PostMapping("api/user/role")
+    @PostMapping("api/user/role/create")
     public ResponseEntity<Role> createRole(@RequestBody  Role role){ //always make sure to include the @RequestBody
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/role/save").toString());
         return ResponseEntity.created(uri).body(this.userService.saveRole(role));
@@ -46,5 +46,10 @@ public class UserController {
     public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form){
         this.userService.addRoleToUser(form.getUsername(), form.getRoleName());
         return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteUser(@PathVariable long id){
+        return null; // Technical Debt, Continue deleteUser()
     }
 }

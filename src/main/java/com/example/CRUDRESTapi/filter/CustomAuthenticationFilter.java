@@ -2,6 +2,7 @@ package com.example.CRUDRESTapi.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,16 +18,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.auth0.jwt.algorithms.Algorithm.HMAC256;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j //for logs
 
-public class CustomAuthFilter extends UsernamePasswordAuthenticationFilter {
+public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
 
-    public CustomAuthFilter(AuthenticationManager authenticationManager) {
+    public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
 
@@ -58,10 +61,14 @@ public class CustomAuthFilter extends UsernamePasswordAuthenticationFilter {
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm); //we sign this access_token to the algorithm
 
-        response.setHeader("access_token",access_token);
-        response.setHeader("refresh_token",refresh_token);
+        //response.setHeader("access_token",access_token); //we can use Map to set it in the response body 1:24:00
+        //response.setHeader("refresh_token",refresh_token); //we can use Map to set it in the response body 1:24:00
+        Map<String, String> tokens = new HashMap<>();
+        tokens.put("access_token", access_token);
+        tokens.put("refresh_token", refresh_token);
+        response.setContentType(APPLICATION_JSON_VALUE);
+        new ObjectMapper().writeValue(response.getOutputStream(), tokens); // this going to return the tokens in a JSON format in the body of the response
 
-//        response.addCookie(access_token);
     }
 
     //We also can override unsuccessfulAuthentication , for caching purposes and check the amount of failed logged in attempt by a user (used in brute force attack)
