@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 public class EmployeeController {
 
-    @Autowired
+    @Autowired //Inject the Employee service in the controller to use the employeeService Object
     private EmployeeService employeeService;
 
     @GetMapping("api/employees")

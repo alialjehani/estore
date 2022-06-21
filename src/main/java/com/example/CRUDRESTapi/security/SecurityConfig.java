@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(POST,"api/Branches/**").hasAuthority("SUPER_ADMIN");
         http.authorizeRequests().antMatchers(POST,"api/employees/**").hasAuthority("MANAGER");
         http.authorizeRequests().antMatchers(PUT,"api/users/**").hasAuthority("SUPER_ADMIN");
-        http.authorizeRequests().antMatchers(PUT,"api/users/**").hasAuthority("ADMIN");
+
         http.authorizeRequests().antMatchers(PUT,"api/employees/**").hasAuthority("SUPER_ADMIN");
         http.authorizeRequests().antMatchers(PUT,"api/employees/**").hasAuthority("ADMIN");
         http.authorizeRequests().antMatchers(DELETE,"api/users/**").hasAuthority("SUPER_ADMIN");
@@ -68,18 +68,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(DELETE,"api/products/**").hasAuthority("EMPLOYEE");
 
         http.authorizeRequests().anyRequest().authenticated();
-        //http.authorizeRequests().anyRequest().authenticated().and().httpBasic();
+        //http.authorizeRequests().anyRequest().authenticated().and().httpBasic(); //httpBasic() for Basic Authentication
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
      @Bean
-    @Override
+     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 }
-
-
 /*
 * the access_token is used to access resources by the client
 * whenever the access token is required the application on the front end will ask if a re-fresh token is available, so the user can continue accessing the resources*/

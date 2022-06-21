@@ -1,7 +1,7 @@
 package com.example.CRUDRESTapi;
 
-import com.example.CRUDRESTapi.repository.domain.Role;
-import com.example.CRUDRESTapi.repository.domain.User;
+import com.example.CRUDRESTapi.repository.model.domain.Role;
+import com.example.CRUDRESTapi.repository.model.domain.User;
 import com.example.CRUDRESTapi.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,7 +27,8 @@ public class CrudResTapiApplication {
 		@Bean 											//without @Bean the CommandLiner will not run
 		CommandLineRunner run(UserService userService){ //these ROLES, USERS will be created when the application starts
 			return args -> {
-
+				//this is to initialize the users when the application starts
+				// we can create one super_admin and then send post requests to add Users to the JPA, which is sometimes a better approach
 				userService.saveRole(new Role(null, "ADMIN"));
 				userService.saveRole(new Role(null, "SUPER_ADMIN"));
 				userService.saveRole(new Role(null,"MANAGER"));

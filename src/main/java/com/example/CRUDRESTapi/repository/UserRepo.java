@@ -1,7 +1,7 @@
 package com.example.CRUDRESTapi.repository;
 
 
-import com.example.CRUDRESTapi.repository.domain.User;
+import com.example.CRUDRESTapi.repository.model.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

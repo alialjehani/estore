@@ -1,4 +1,4 @@
-package com.example.CRUDRESTapi.repository.domain;
+package com.example.CRUDRESTapi.repository.model.domain;
 
 
 import lombok.*;

@@ -1,7 +1,7 @@
 package com.example.CRUDRESTapi.service;
 
-import com.example.CRUDRESTapi.repository.domain.Role;
-import com.example.CRUDRESTapi.repository.domain.User;
+import com.example.CRUDRESTapi.repository.model.domain.Role;
+import com.example.CRUDRESTapi.repository.model.domain.User;
 
 import java.util.List;
 
